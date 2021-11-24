@@ -1,0 +1,20 @@
+<?php
+
+/* SHOW Bitcoin Price on WordPress */
+
+/* Show before add to cart bottom Woocommerce */
+add_action( 'woocommerce_before_add_to_cart_form', 'precioBTC' );
+
+function precioBTC (){
+$url      = 'https://api.coinbase.com/v2/prices/spot?currency=EUR';
+$response = wp_remote_get( esc_url_raw( $url ) );
+ 
+/* Will result in $api_response being an array of data,
+parsed from the JSON response of the API listed above */
+$api_response = json_decode( wp_remote_retrieve_body( $response ), true );
+$precio = $api_response[data][amount];
+
+echo "</br>" . "<span class='img'><img src='/wp-content/uploads/2021/11/BTC.webp' alt='Bitcoin'></span>" . " Precio del BTC ". $precio;
+}
+
+?>
